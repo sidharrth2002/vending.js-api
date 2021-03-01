@@ -13,6 +13,6 @@ app.get('/', (req, res) => {
     res.send('Home of the Atlas API');
 })
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3001, () => {
     console.log("Running on Port " + process.env.PORT)
 })
