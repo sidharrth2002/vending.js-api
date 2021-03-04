@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-
-const { appointmentService } = require('../services');
+const { appointmentService, vendingMachineService } = require('../services');
+const getShortestPath = require('./shortestPath');
 
 const getAppointment = catchAsync(async(req, res) => {
 
@@ -18,6 +18,19 @@ const getAppointmentByUserId = catchAsync(async(req, res) => {
 
     res.send(result);
 
+})
+
+const makeAppointmentAutomatically = catchAsync(async(req, res) => {
+    let vendingMachine = vendingMachineService.getVendingMachineByID(req.body.vendingMachineID);
+    if(!vendingMachine) {
+        res.status(404).send('Machine Not Found');
+    } else {
+        let coords = {
+            'latitude': vendingMachine.location.latitude,
+            'longitude': vendingMachine.location.longitude
+        }
+        let bestTechnician = await getShortestPath(coords);
+    }
 })
 
 module.exports = {

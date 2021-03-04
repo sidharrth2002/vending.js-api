@@ -5,6 +5,7 @@ const docsRoute = require('./docs.route');
 const complaintRoute = require('./complaint.route');
 const appointmentRoute = require('./appointment.route');
 const vendingMachineRoute = require('./vendingMachines.route');
+const shortestPathRoute = require('./shortestPath.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -38,6 +39,10 @@ const devRoutes = [
     path: '/docs',
     route: docsRoute,
   },
+  {
+    path: '/shortestpath',
+    route: shortestPathRoute
+  }
 ];
 
 defaultRoutes.forEach((route) => {

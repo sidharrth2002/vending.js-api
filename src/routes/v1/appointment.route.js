@@ -10,6 +10,10 @@ router
     .get(auth('getUsers'), appointmentController.getAppointment);
 
 router
+    .route('/autoappointment')
+    // .post(auth('getUsers'), appointmentController.makeAppointmentAutomatically)
+
+router
     .route('/:id')
     .get(auth('getUsers'), appointmentController.getAppointmentByUserId);
 
