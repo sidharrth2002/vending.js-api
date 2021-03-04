@@ -3,6 +3,7 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const docsRoute = require('./docs.route');
 const complaintRoute = require('./complaint.route');
+const appointmentRoute = require('./appointment.route');
 const vendingMachineRoute = require('./vendingMachines.route');
 const config = require('../../config/config');
 
@@ -20,6 +21,10 @@ const defaultRoutes = [
   {
     path: '/complaint',
     route: complaintRoute
+  },
+  {
+    path: '/appointment',
+    route: appointmentRoute
   },
   {
     path: '/vendingmachines',
