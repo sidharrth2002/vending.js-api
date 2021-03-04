@@ -35,11 +35,21 @@ const userSchema = mongoose.Schema(
       },
       private: true, // used by the toJSON plugin
     },
+    nationality: String,
     role: {
       type: String,
       enum: roles,
       default: 'user',
     },
+    address: {
+      latitude: Number,
+      longitude: Number
+    },
+    serviceType: {
+      type: String,
+      enum: ['Repair', 'Refuelling', 'Maintenance', 'General']
+    },
+    workingHours: [Number],
   },
   {
     timestamps: true,
