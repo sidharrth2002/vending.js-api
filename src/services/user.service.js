@@ -112,7 +112,7 @@ const deleteUserById = async (userId) => {
 };
 
 const getTechnicians = async () => {
-  return await User.find({role: 'user'});
+  return User.find({role: 'user'});
 };
 
 module.exports = {

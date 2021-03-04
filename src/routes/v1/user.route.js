@@ -13,7 +13,7 @@ router
 
 router
   .route('/technicians')
-  .get(auth('getUsers', userController.getTechnicians))
+  .get(auth('getUsers'), userController.getTechnicians)
 
 router
   .route('/:userId')
