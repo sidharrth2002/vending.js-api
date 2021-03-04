@@ -11,19 +11,39 @@ const createUser = async (userBody) => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  //continue this based on model
-  let newTechnician = new User({
-    email: userBody.email,
-    address: {
-      latitude: userBody.latitude,
-      longitude: userBody.longitude
-    },
-    role: userBody.role,
-    workingHours: [parseInt(userBody.workingHoursStart), parseInt(userBody.workingHoursEnd)]
-  })
+
+  if (userBody.role == 'admin') {
+    // If registering for an admin account
+    let newUser = new User({
+      name: userBody.name,
+      email: userBody.email,
+      password: userBody.password,
+      nationality: userBody.nationality,
+      role: userBody.role,
+      address: {
+        latitude: userBody.latitude,
+        longitude: userBody.longitude
+      }
+    });
+  } else if (userBody.role == 'user'){
+    // If registering for a technician/user account
+    let newUser = new User({
+      name: userBody.name,
+      email: userBody.email,
+      password: userBody.password,
+      nationality: userBody.nationality,
+      role: userBody.role,
+      address: {
+        latitude: userBody.latitude,
+        longitude: userBody.longitude
+      },
+      serviceType: userBody.serviceType,
+      workingHours: [parseInt(userBody.workingHoursStart), parseInt(userBody.workingHoursEnd)]
+    });
+  }
   
-  await newTechnician.save();
-  return newTechnician;
+  await newUser.save();
+  return newUser;
 };
 
 /**
@@ -91,6 +111,10 @@ const deleteUserById = async (userId) => {
   return user;
 };
 
+const getTechnicians = async () => {
+  return await User.find({role: 'user'});
+};
+
 module.exports = {
   createUser,
   queryUsers,
@@ -98,4 +122,5 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  getTechnicians
 };
