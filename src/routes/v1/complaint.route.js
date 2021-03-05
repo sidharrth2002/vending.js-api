@@ -8,6 +8,7 @@ const router = express.Router();
 router
 .route('/')
 .get(auth('getComplaints'), complaintController.getComplaints)
+.post(complaintController.makeComplaint);
 
 router
 .route('/:id')

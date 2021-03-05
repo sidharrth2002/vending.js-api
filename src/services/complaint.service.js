@@ -1,11 +1,16 @@
 const httpStatus = require('http-status');
 const { Complaint } = require('../models');
 const ApiError = require('../utils/ApiError');
+const mongoose = require('mongoose');
 
 const makeComplaint = async(reqbody) => {
-    let complaintbody = reqbody.body;
+    if(!mongoose.isValidObjectId(reqbody.vendingMachineID)) {
+        reqbody.vendingMachineID = mongoose.Types.ObjectId(reqbody.vendingMachineID);
+    }
     const newComplaint = new Complaint({
-        body: complaintbody
+        body: reqbody.body,
+        urgency: reqbody.urgency,
+        vendingMachine: mongoose.Types.ObjectId(reqbody.vendingMachineID)
     })
     await newComplaint.save();
     return newComplaint;

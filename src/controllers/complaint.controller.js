@@ -4,6 +4,9 @@ const catchAsync = require('../utils/catchAsync');
 const { complaintService } = require('../services');
 
 const makeComplaint = catchAsync(async (req, res) => {
+    if(!req.body.vendingMachine || !req.body.body || !req.body.urgency) {
+        res.status(503).send('Missing Information');
+    }
     let createdComplaint = await complaintService.makeComplaint(req.body);
     if(createdComplaint) {
         res.status(200).send(createdComplaint)
