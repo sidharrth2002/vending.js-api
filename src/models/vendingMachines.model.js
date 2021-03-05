@@ -4,6 +4,7 @@ const { roles } = require('../config/roles');
 
 const vendingMachinesSchema = new mongoose.Schema(
     {
+        _id: String,
         type: String,
         location: {
             address: String,

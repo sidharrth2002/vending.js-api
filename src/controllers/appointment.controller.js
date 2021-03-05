@@ -34,8 +34,7 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
 })
 
 module.exports = {
-
     getAppointment,
-    getAppointmentByUserId
-
+    getAppointmentByUserId,
+    makeAppointmentAutomatically
 }

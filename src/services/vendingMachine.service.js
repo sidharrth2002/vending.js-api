@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const { VendingMachine } = require('../models');
+const catchAsync = require('../utils/catchAsync');
 // const VendingMachine = require('../models/VendingMachine.model');
 const ApiError = require('../utils/ApiError');
 
@@ -9,7 +10,7 @@ const getVendingMachine = async(reqbody) => {
 
 const createVendingMachine = catchAsync(async(vendingMachineBody) => {
     let newVendingMachine = new VendingMachine({
-        type: vendingMachineBody.name,
+        type: vendingMachineBody.type,
         location: {
             address: newVendingMachine.address,
             latitude: newVendingMachine.latitude,
