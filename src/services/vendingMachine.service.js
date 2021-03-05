@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const { VendingMachine } = require('../models');
+const catchAsync = require('../utils/catchAsync');
 // const VendingMachine = require('../models/VendingMachine.model');
 const ApiError = require('../utils/ApiError');
 
@@ -7,10 +8,33 @@ const getVendingMachine = async(reqbody) => {
     return VendingMachine.find({});
 }
 
+const createVendingMachine = catchAsync(async(vendingMachineBody) => {
+    let newVendingMachine = new VendingMachine({
+        type: vendingMachineBody.type,
+        location: {
+            address: vendingMachineBody.address,
+            latitude: vendingMachineBody.latitude,
+            longitude: vendingMachineBody.longitude
+        },
+        supply: {
+            coffee: {
+                cappucino: vendingMachineBody.cappucino,
+                mocha: vendingMachineBody.mocha,
+                latte: vendingMachineBody.latto,
+                espresso: vendingMachineBody.espresso
+            },
+            milk: vendingMachineBody.milk,
+            milo: vendingMachineBody.milo,
+            snickers: vendingMachineBody.snickers           
+        }
+    });
+      
+    await newVendingMachine.save();
+    return newVendingMachine;
+})
+
 const getVendingMachineByID = async(id) => {
     
-    let result = await VendingMachine.findById(id);
-    console.log(result)
     return VendingMachine.findById(id);
 }
 
@@ -26,6 +50,7 @@ const updateVendingMachineByID = async(id, newSupply) => {
 
 module.exports = {
     getVendingMachine,
+    createVendingMachine,
     getVendingMachineByID,
     updateVendingMachineByID
 };

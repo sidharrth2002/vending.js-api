@@ -8,6 +8,11 @@ const getVendingMachine = catchAsync(async(req, res) => {
     res.send(result);
 })
 
+const createVendingMachine = catchAsync(async (req, res) => {
+    const vendingMachine = await vendingMachineService.createVendingMachine(req.body);
+    res.status(httpStatus.CREATED).send(vendingMachine);
+});
+
 const getVendingMachineByID = catchAsync(async(req, res) => {
     const result = await vendingMachineService.getVendingMachineByID(req.params.id);
     res.send(result);
@@ -20,6 +25,7 @@ const updateVendingMachineByID = catchAsync(async(req, res) => {
 
 module.exports = {
     getVendingMachine,
+    createVendingMachine,
     getVendingMachineByID,
     updateVendingMachineByID
 };  

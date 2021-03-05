@@ -8,15 +8,16 @@ const router = express.Router();
 router
 .route('/')
 .get(auth('getVendingMachines'), vendingMachineController.getVendingMachine)
+.post(auth('createVendingMachine'), vendingMachineController.createVendingMachine)
 
 router
 .route('/:id')
 .get(auth('getVendingMachineByID'), vendingMachineController.getVendingMachineByID)
 .patch(auth('updateVendingMachineByID'), vendingMachineController.updateVendingMachineByID)
 
-// router
-// .route('/machine/:id')
-// .get(auth('getComplaints'), vendingMachineController.getComplaintByMachine)
+/* router
+.route('/machine/:id')
+.get(auth('getComplaints'), vendingMachineController.getComplaintByMachine) */
 
 module.exports = router;
 // router.post()
