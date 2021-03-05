@@ -8,6 +8,9 @@ const getVendingMachine = async(reqbody) => {
 }
 
 const getVendingMachineByID = async(id) => {
+    
+    let result = await VendingMachine.findById(id);
+    console.log(result)
     return VendingMachine.findById(id);
 }
 

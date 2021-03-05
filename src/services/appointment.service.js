@@ -31,5 +31,6 @@ const makeAppointment = async(vendingMachineID, technicianID, serviceType, remar
 
 module.exports = {
     getAppointment,
-    getAppointmentByUserId
+    getAppointmentByUserId,
+    makeAppointment
 }

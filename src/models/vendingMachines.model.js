@@ -26,6 +26,6 @@ const vendingMachinesSchema = new mongoose.Schema(
     }
 );
 
-const VendingMachine = mongoose.model('VendingMachines', vendingMachinesSchema);
+const VendingMachine = mongoose.model('vendingmachine', vendingMachinesSchema);
 
 module.exports = VendingMachine;
