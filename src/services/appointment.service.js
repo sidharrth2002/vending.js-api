@@ -18,8 +18,16 @@ const getAppointmentByUserId = async(id) => {
 
 //integrate later lah
 const makeAppointment = async(vendingMachineID, technicianID, serviceType, remarks) => {
+
+    if(!mongoose.isValidObjectId(technicianID)){
+
+        technicianID = mongoose.Types.ObjectId(technicianID)
+
+    }
+
     let newAppointment = new Appointment({
-        technician: mongoose.Types.ObjectId(technicianID),
+    
+        technician: technicianID,
         vendingMachine: mongoose.Types.ObjectId(vendingMachineID),
         serviceType: serviceType,
         remarks: remarks,
@@ -31,5 +39,6 @@ const makeAppointment = async(vendingMachineID, technicianID, serviceType, remar
 
 module.exports = {
     getAppointment,
-    getAppointmentByUserId
+    getAppointmentByUserId,
+    makeAppointment
 }

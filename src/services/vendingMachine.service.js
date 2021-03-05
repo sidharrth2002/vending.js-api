@@ -34,6 +34,7 @@ const createVendingMachine = catchAsync(async(vendingMachineBody) => {
 })
 
 const getVendingMachineByID = async(id) => {
+    
     return VendingMachine.findById(id);
 }
 

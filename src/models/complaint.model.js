@@ -22,7 +22,8 @@ const complaintSchema = mongoose.Schema(
       type: String,
       default: 'Unsolved',
       enum: ['Solved', 'Unsolved', 'WIP']
-    }
+    },
+    remarks: String
   }, {
     timestamps: true
   }

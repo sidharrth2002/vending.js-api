@@ -4,7 +4,6 @@ const { roles } = require('../config/roles');
 
 const vendingMachinesSchema = new mongoose.Schema(
     {
-        _id: String,
         type: String,
         location: {
             address: String,
@@ -27,6 +26,6 @@ const vendingMachinesSchema = new mongoose.Schema(
     }
 );
 
-const VendingMachine = mongoose.model('VendingMachines', vendingMachinesSchema);
+const VendingMachine = mongoose.model('vendingmachine', vendingMachinesSchema);
 
 module.exports = VendingMachine;
