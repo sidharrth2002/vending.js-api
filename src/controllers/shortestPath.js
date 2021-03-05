@@ -1,6 +1,5 @@
 const userService = require('../services/user.service');
 const axios = require('axios');
-const { random } = require('faker');
 
 const MAPS_URL = 'https://api.distancematrix.ai/maps/api/distancematrix/json?';
 
