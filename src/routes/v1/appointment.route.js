@@ -11,7 +11,7 @@ router
 
 router
     .route('/autoappointment')
-    // .post(auth('getUsers'), appointmentController.makeAppointmentAutomatically)
+    .post(auth('getUsers'), appointmentController.makeAppointmentAutomatically);
 
 router
     .route('/:id')
