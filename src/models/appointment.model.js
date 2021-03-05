@@ -9,7 +9,7 @@ const appointmentSchema = new mongoose.Schema({
     },
     vendingMachine: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: 'VendingMachines'
+        ref: 'vendingmachine'
     },
     serviceType: {
         type: String,

@@ -6,7 +6,7 @@ const getShortestPath = require('./shortestPath');
 const getAppointment = catchAsync(async(req, res) => {
 
     const result = await appointmentService.getAppointment();
-
+    console.log(result);
     res.send(result);
 
 })

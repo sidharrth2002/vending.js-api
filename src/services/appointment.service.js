@@ -4,7 +4,10 @@ const { Appointment } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 const getAppointment =  async() => {
-    return Appointment.find({})    
+    const appointments = await Appointment.find()
+    .populate('technician')
+    .populate('vendingMachine')
+    return appointments;
 }
 
 const getAppointmentByUserId = async(id) => {
