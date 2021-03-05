@@ -7,6 +7,31 @@ const getVendingMachine = async(reqbody) => {
     return VendingMachine.find({});
 }
 
+const createVendingMachine = catchAsync(async(vendingMachineBody) => {
+    let newVendingMachine = new VendingMachine({
+        type: vendingMachineBody.name,
+        location: {
+            address: newVendingMachine.address,
+            latitude: newVendingMachine.latitude,
+            longitude: newVendingMachine.longitude
+        },
+        supply: {
+            coffee: {
+                cappucino: newVendingMachine.cappucino,
+                mocha: newVendingMachine.mocha,
+                latte: newVendingMachine.latto,
+                espresso: newVendingMachine.espresso
+            },
+            milk: newVendingMachine.milk,
+            milo: newVendingMachine.milo,
+            snickers: newVendingMachine.snickers           
+        }
+    });
+      
+      await newVendingMachine.save();
+      return newVendingMachine;
+})
+
 const getVendingMachineByID = async(id) => {
     return VendingMachine.findById(id);
 }
@@ -23,6 +48,7 @@ const updateVendingMachineByID = async(id, newSupply) => {
 
 module.exports = {
     getVendingMachine,
+    createVendingMachine,
     getVendingMachineByID,
     updateVendingMachineByID
 };

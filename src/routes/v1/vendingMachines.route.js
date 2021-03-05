@@ -8,6 +8,7 @@ const router = express.Router();
 router
 .route('/')
 .get(auth('getVendingMachines'), vendingMachineController.getVendingMachine)
+.post(auth('createVendingMachine'), vendingMachineController.createVendingMachine)
 
 router
 .route('/:id')
