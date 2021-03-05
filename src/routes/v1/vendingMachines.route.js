@@ -5,6 +5,14 @@ const auth = require('../../middlewares/auth');
 
 const router = express.Router();
 
+const checkAuth = (req, res, next) => {
+    if(req.body.dummyAuth == 'corneliuspang') {
+        next();
+    } else {
+        res.status(401).send('Someone else is trying to use this API! Screw off!');
+    }
+}
+
 router
 .route('/')
 .get(auth('getVendingMachines'), vendingMachineController.getVendingMachine)
@@ -12,8 +20,10 @@ router
 
 router
 .route('/:id')
-.get(auth('getVendingMachineByID'), vendingMachineController.getVendingMachineByID)
+.post(checkAuth, vendingMachineController.getVendingMachineByID)
 .patch(auth('updateVendingMachineByID'), vendingMachineController.updateVendingMachineByID)
+
+
 
 /* router
 .route('/machine/:id')
