@@ -9,7 +9,7 @@ const getVendingMachine = catchAsync(async(req, res) => {
 })
 
 const createVendingMachine = catchAsync(async (req, res) => {
-    const vendingMachine = await vendingMachineService.createUser(req.body);
+    const vendingMachine = await vendingMachineService.createVendingMachine(req.body);
     res.status(httpStatus.CREATED).send(vendingMachine);
 });
 

@@ -12,25 +12,25 @@ const createVendingMachine = catchAsync(async(vendingMachineBody) => {
     let newVendingMachine = new VendingMachine({
         type: vendingMachineBody.type,
         location: {
-            address: newVendingMachine.address,
-            latitude: newVendingMachine.latitude,
-            longitude: newVendingMachine.longitude
+            address: vendingMachineBody.address,
+            latitude: vendingMachineBody.latitude,
+            longitude: vendingMachineBody.longitude
         },
         supply: {
             coffee: {
-                cappucino: newVendingMachine.cappucino,
-                mocha: newVendingMachine.mocha,
-                latte: newVendingMachine.latto,
-                espresso: newVendingMachine.espresso
+                cappucino: vendingMachineBody.cappucino,
+                mocha: vendingMachineBody.mocha,
+                latte: vendingMachineBody.latto,
+                espresso: vendingMachineBody.espresso
             },
-            milk: newVendingMachine.milk,
-            milo: newVendingMachine.milo,
-            snickers: newVendingMachine.snickers           
+            milk: vendingMachineBody.milk,
+            milo: vendingMachineBody.milo,
+            snickers: vendingMachineBody.snickers           
         }
     });
       
-      await newVendingMachine.save();
-      return newVendingMachine;
+    await newVendingMachine.save();
+    return newVendingMachine;
 })
 
 const getVendingMachineByID = async(id) => {

@@ -12,9 +12,11 @@ const createUser = async (userBody) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
 
+  let newUser;
+  
   if (userBody.role == 'admin') {
     // If registering for an admin account
-    let newUser = new User({
+    newUser = new User({
       name: userBody.name,
       email: userBody.email,
       password: userBody.password,
@@ -27,7 +29,7 @@ const createUser = async (userBody) => {
     });
   } else if (userBody.role == 'user'){
     // If registering for a technician/user account
-    let newUser = new User({
+    newUser = new User({
       name: userBody.name,
       email: userBody.email,
       password: userBody.password,
