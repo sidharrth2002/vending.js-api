@@ -52,5 +52,6 @@ module.exports = {
     getVendingMachine,
     createVendingMachine,
     getVendingMachineByID,
-    updateVendingMachineByID
+    updateVendingMachineByID,
+    getVendingMachineByID
 };
