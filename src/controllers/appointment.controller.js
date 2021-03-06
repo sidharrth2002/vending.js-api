@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { appointmentService, vendingMachineService, complaintService } = require('../services');
 const { bestPossibleTechnician } = require('./shortestPath');
-const { VendingMachine } = require('../models');
+const { Complaint } = require('../models');
 
 const getAppointment = catchAsync(async(req, res) => {
     const result = await appointmentService.getAppointment();
@@ -33,7 +33,7 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
             let bestTechnician = await bestPossibleTechnician(coords, '');
         }
         
-        let complaint = await VendingMachine.findById(req.body.complaintId);
+        let complaint = await Complaint.findById(req.body.complaintId);
         console.log(complaint);
         if(!complaint){
             res.status(404).send('Complaint Not Found');
