@@ -7,8 +7,9 @@ const makeComplaint = async(reqbody) => {
 /*     if(mongoose.isValidObjectId(reqbody.vendingMachineID)) {
         reqbody.vendingMachineID = mongoose.Types.ObjectId(reqbody.vendingMachineID);
     } */
-    let machine = await VendingMachine.findById(id);
     console.log(reqbody)
+    let machine = await VendingMachine.findById(reqbody.vendingMachine);
+
     const newComplaint = new Complaint({
         body: reqbody.body,
         urgency: reqbody.urgency,
