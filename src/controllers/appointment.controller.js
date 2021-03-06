@@ -24,7 +24,11 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
             'latitude': vendingMachine.location.latitude,
             'longitude': vendingMachine.location.longitude
         }
-        let bestTechnician = await bestPossibleTechnician(coords);
+        if(req.body.technicianExclude) {
+            let bestTechnician = await bestPossibleTechnician(coords, technicianExclude);            
+        } else {
+            let bestTechnician = await bestPossibleTechnician(coords, '');
+        }
         
         let complaint = await complaintService.getComplaintByID(req.body.complaintId)
         if(!complaint){

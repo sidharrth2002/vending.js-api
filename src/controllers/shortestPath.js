@@ -62,8 +62,13 @@ const getCenter = (latLngInDegr) => {
 //custom algorithm to determine the best technician to attend to a service
 //use centroid calculation
 //and distance matrix
-const bestPossibleTechnician = async (vendingMachineCoordinates) => {
+const bestPossibleTechnician = async (vendingMachineCoordinates, excludeTechnician) => {
     let users = await userService.getTechnicians();
+
+    //exclude technician
+    if(excludeTechnician != '') {
+        users = users.filter(technician => technician._id != excludeTechnician);
+    }
     
     //get realtime/fake current coords
     const latlong = []
