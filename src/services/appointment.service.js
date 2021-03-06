@@ -43,7 +43,7 @@ const makeAppointment = async(vendingMachineID, technicianID, serviceType, remar
 const updateAppointment = async(id, status) => {
     let updated = await Appointment.findOneAndUpdate({_id: id}, {status: status}, {
         new: true
-    })
+    }).populate('technician').populate('vendingMachine')
     return updated;
 }
 
