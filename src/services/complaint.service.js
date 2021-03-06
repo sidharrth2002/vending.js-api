@@ -10,8 +10,12 @@ const makeComplaint = async(reqbody) => {
     const newComplaint = new Complaint({
         body: reqbody.body,
         urgency: reqbody.urgency,
-        vendingMachine: mongoose.Types.ObjectId(reqbody.vendingMachineID)
+        serviceType: reqbody.serviceType,
+        vendingMachine: mongoose.Types.ObjectId(reqbody.vendingMachineID),
     })
+    if(newComplaint.serviceType == 'Refuelling') {
+        newComplaint.itemsToRefill = reqbody.itemsToRefill;
+    }
     await newComplaint.save();
     return newComplaint;
 }

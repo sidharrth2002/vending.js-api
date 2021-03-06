@@ -23,6 +23,11 @@ const complaintSchema = mongoose.Schema(
       default: 'Unsolved',
       enum: ['Solved', 'Unsolved', 'WIP']
     },
+    serviceType: {
+      type: String,
+      enum: ['Repair', 'Refuelling', 'Maintenance', 'General']
+    },
+    itemsToRefill: [String],
     remarks: String
   }, {
     timestamps: true
