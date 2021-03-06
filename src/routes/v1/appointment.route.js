@@ -21,6 +21,6 @@ router
 
 router
     .route('/takeover')
-    .post(auth('getUsers'), appointmentController.takeOverAppointment)
+    .post(appointmentController.takeOverAppointment)
 
 module.exports = router;

@@ -65,7 +65,7 @@ const updateAppointment = async(id, status) => {
 const reassignAppointment = async(appointmentID, technicianID) => {
     console.log(appointmentID);
     console.log(technicianID);
-    let appointment = await Appointment.findOneAndUpdate({ _id : appointmentID}, 
+    let appointment = await Appointment.findByIdAndUpdate(appointmentID, 
         {technician: technicianID
     }, {
         new: true
