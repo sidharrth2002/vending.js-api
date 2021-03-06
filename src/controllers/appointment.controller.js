@@ -16,9 +16,7 @@ const getAppointmentByUserId = catchAsync(async(req, res) => {
 })
 
 const makeAppointmentAutomatically = catchAsync(async(req, res) => {
-
     console.log(req.body)
-
     let vendingMachine = await vendingMachineService.getVendingMachineByID(req.body.vendingMachineID);
     console.log(vendingMachine)
     if(!vendingMachine) {

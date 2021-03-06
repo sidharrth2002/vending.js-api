@@ -4,9 +4,6 @@ const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
 
 const makeComplaint = async(reqbody) => {
-/*     if(mongoose.isValidObjectId(reqbody.vendingMachineID)) {
-        reqbody.vendingMachineID = mongoose.Types.ObjectId(reqbody.vendingMachineID);
-    } */
     console.log(reqbody)
     let machine = await VendingMachine.findById(reqbody.vendingMachine);
 
