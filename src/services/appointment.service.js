@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const httpStatus = require('http-status');
-const { Appointment } = require('../models');
+const { Appointment, User, VendingMachine } = require('../models');
 const ApiError = require('../utils/ApiError');
 const moment = require('moment');
 
@@ -37,9 +37,11 @@ const makeAppointment = async(vendingMachineID, technicianID, serviceType, remar
     if(!mongoose.isValidObjectId(technicianID)){
         technicianID = mongoose.Types.ObjectId(technicianID)
     }
+    let technician = await User.findById(technicianID);
+    let vendingMachine = await VendingMachine.findById(vendingMachineID);
     let newAppointment = new Appointment({
-        technician: technicianID,
-        vendingMachine: mongoose.Types.ObjectId(vendingMachineID),
+        technician: technician._id,
+        vendingMachine: vendingMachine._id,
         serviceType: serviceType,
         remarks: remarks,
         deadline: moment().add(2,'d').toDate()
@@ -63,7 +65,7 @@ const reassignAppointment = async(appointmentID, technicianID) => {
     console.log(appointmentID);
     console.log(technicianID);
     let appointment = await Appointment.findOneAndUpdate({ _id : appointmentID}, 
-        {technician: mongoose.Types.ObjectId(technicianID)
+        {technician: technicianID
     }, {
         new: true
     });
