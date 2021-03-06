@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const { Complaint } = require('../models');
 const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
-const { vendingMachineService } = require('.');
+const { vendingMachineService } = require('./vendingMachine.service');
 
 const makeComplaint = async(reqbody) => {
 /*     if(mongoose.isValidObjectId(reqbody.vendingMachineID)) {
