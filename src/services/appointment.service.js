@@ -14,7 +14,7 @@ const getAppointment = async() => {
 const getAppointmentByUserId = async(id) => {
     if(mongoose.isValidObjectId(id)){
         console.log(id);
-        const appointments = await Appointment.find({ technician: mongoose.Types.ObjectId(id) })
+        const appointments = await Appointment.find({ technician: id })
         .populate('technician')
         .populate('vendingMachine');
         return appointments;
@@ -25,7 +25,7 @@ const getAppointmentByUserId = async(id) => {
 
 const getPendingByUserId = async(id) => {
     if(mongoose.isValidObjectId(id)) {
-        return Appointment.find({ technician: mongoose.Types.ObjectId, 'status': { $in: ['Pending', 'Ongoing'] } })
+        return Appointment.find({ technician: mongoose.Types.ObjectId(id), 'status': { $in: ['Pending', 'Ongoing'] } })
     } else {
         return;
     }
