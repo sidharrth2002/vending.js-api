@@ -35,6 +35,7 @@ const degr2rad = (degr) => {
 }
 
 const getCenter = (latLngInDegr) => {
+    console.log(latLngInDegr);
     var LATIDX = 0;
     var LNGIDX = 1;
     var sumX = 0;
@@ -48,7 +49,6 @@ const getCenter = (latLngInDegr) => {
         sumY += Math.cos(lat) * Math.sin(lng);
         sumZ += Math.sin(lat);
     }
-
     var avgX = sumX / latLngInDegr.length;
     var avgY = sumY / latLngInDegr.length;
     var avgZ = sumZ / latLngInDegr.length;
@@ -56,15 +56,14 @@ const getCenter = (latLngInDegr) => {
     var lng = Math.atan2(avgY, avgX);
     var hyp = Math.sqrt(avgX * avgX + avgY * avgY);
     var lat = Math.atan2(avgZ, hyp);
-
     return ([rad2degr(lat), rad2degr(lng)]);
 }
 
 //custom algorithm to determine the best technician to attend to a service
+//use centroid calculation
+//and distance matrix
 const bestPossibleTechnician = async (vendingMachineCoordinates) => {
     let users = await userService.getTechnicians();
-    console.log('The users are');
-    // console.log(users);
     
     //get realtime/fake current coords
     const latlong = []
@@ -84,37 +83,36 @@ const bestPossibleTechnician = async (vendingMachineCoordinates) => {
         let pending = await appointmentService.getAppointmentByUserId(user._id);
         // console.log(pending);
         user.pendingApp = pending;
-        apppointLocations = [];
+        let apppointLocations = [];
         for(let appointment of pending) {
-            console.log(appointment);
+            let latlong = {
+                'latitude': appointment.vendingMachine.location.latitude,
+                'longitude': appointment.vendingMachine.location.longitude
+            };
+            apppointLocations.push(latlong);
+        }
+        let center = getCenter(apppointLocations);
+        if(center[0] && center[1]) {
+            let querystring = MAPS_URL;
+            querystring += 'origins=';
+            querystring = querystring + center[0] + ',' + center[1];
+            querystring += '&destinations=';
+            querystring = querystring + vendingMachineCoordinates['latitude'] + ',' + vendingMachineCoordinates['longitude'];
+            querystring += '&key=' + process.env.MAP_KEY;
+            let doc = await axios.get(querystring, {method: 'GET', mode: 'no-cors'});
+            console.log(doc.data.rows[0].elements[0].distance);
+            let relativeDist = doc.data.rows[0].elements[0].distance.value;
+            user.relativeDist = relativeDist;
+        } else {
+            //no data, so assume nowhere near
+            user.relativeDist = 10000000;
         }
     }
-
-    let querystring = MAPS_URL;
-    querystring += 'origins=';
-    for(let data of latlong) {
-        querystring = querystring + data['latitude'] + ',' + data['longitude'];
-        if(latlong.indexOf(data) != latlong.length - 1) {
-            querystring += '|';
-        }
-    }
-    querystring += '&destinations=';
-    querystring = querystring + vendingMachineCoordinates['latitude'] + ',' + vendingMachineCoordinates['longitude'];
-    querystring += '&key=' + process.env.MAP_KEY;
-    let doc = await axios.get(querystring, {method: 'GET', mode: 'no-cors'});
-    let data = doc.data.rows;
-    for(let i=0; i<users.length; i++) {
-        let distanceData = data[i];
-        users[i].distanceMatrix = distanceData;
-    }
-    users.sort((a, b) => (a.distanceMatrix.elements[0].distance.value > b.distanceMatrix.elements[0].distance.value ? 1 : -1))
-    // console.log(users);
-
-
-
-
-
-    return users[0];
+    users.sort((a, b) => (a.relativeDist > b.relativeDist ? 1 : -1));
+    let toptechnicians = users.slice(0, 4);
+    toptechnicians.sort((a, b) => (a.pendingApp.length > b.pendingApp.length ? 1 : -1));
+    console.log(toptechnicians);
+    return toptechnicians[0];
 }
 
 module.exports = bestPossibleTechnician

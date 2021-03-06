@@ -3,7 +3,7 @@ const httpStatus = require('http-status');
 const { Appointment } = require('../models');
 const ApiError = require('../utils/ApiError');
 
-const getAppointment =  async() => {
+const getAppointment = async() => {
     const appointments = await Appointment.find()
     .populate('technician')
     .populate('vendingMachine')
