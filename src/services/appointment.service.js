@@ -54,10 +54,17 @@ const updateAppointment = async(id, status) => {
     return updated;
 }
 
+const reassignAppointment = async(appointmentID, technicianID) => {
+    let appointment = await Appointment.findOneAndUpdate({_id:appointmentID}, {technician: mongoose.Types.ObjectId(technicianID)}, {new: true});
+    console.log(appointment);
+    return appointment;
+}
+
 module.exports = {
     getAppointment,
     getAppointmentByUserId,
     makeAppointment,
     updateAppointment,
-    getPendingByUserId
+    getPendingByUserId,
+    reassignAppointment
 }

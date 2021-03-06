@@ -50,9 +50,17 @@ const updateAppointment = catchAsync(async(req, res) => {
     }
 })
 
+const takeOverAppointment = catchAsync(async(req, res) => {
+    let newTechnicianID = req.body.technicianID;
+    let appointmentID = req.body.appointmentID;
+    let updated = await appointmentService.reassignAppointment(appointmentID, newTechnicianID);
+    res.send(updated);
+})
+
 module.exports = {
     getAppointment,
     getAppointmentByUserId,
     makeAppointmentAutomatically,
-    updateAppointment
+    updateAppointment,
+    takeOverAppointment
 }

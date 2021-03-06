@@ -18,4 +18,8 @@ router
     .get(auth('getUsers'), appointmentController.getAppointmentByUserId)
     .patch(auth('getUsers'), appointmentController.updateAppointment)
 
+router
+    .route('/takeover')
+    .post(auth('getUsers'), appointmentController.takeOverAppointment)
+
 module.exports = router;
