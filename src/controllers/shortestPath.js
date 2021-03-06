@@ -1,6 +1,7 @@
 const userService = require('../services/user.service');
 // const appointment
 const axios = require('axios');
+const { appointmentService } = require('../services');
 
 const MAPS_URL = 'https://api.distancematrix.ai/maps/api/distancematrix/json?';
 
@@ -25,11 +26,47 @@ const getRandomCoordinates = () => {
 
 console.log(getRandomCoordinates());
 
+const rad2degr = (rad) => { 
+    return rad * 180 / Math.PI; 
+}
+
+const degr2rad = (degr) => { 
+    return degr * Math.PI / 180; 
+}
+
+const getCenter = (latLngInDegr) => {
+    var LATIDX = 0;
+    var LNGIDX = 1;
+    var sumX = 0;
+    var sumY = 0;
+    var sumZ = 0;
+
+    for (var i=0; i<latLngInDegr.length; i++) {
+        var lat = degr2rad(latLngInDegr[i].latitude);
+        var lng = degr2rad(latLngInDegr[i].longitude);
+        sumX += Math.cos(lat) * Math.cos(lng);
+        sumY += Math.cos(lat) * Math.sin(lng);
+        sumZ += Math.sin(lat);
+    }
+
+    var avgX = sumX / latLngInDegr.length;
+    var avgY = sumY / latLngInDegr.length;
+    var avgZ = sumZ / latLngInDegr.length;
+
+    var lng = Math.atan2(avgY, avgX);
+    var hyp = Math.sqrt(avgX * avgX + avgY * avgY);
+    var lat = Math.atan2(avgZ, hyp);
+
+    return ([rad2degr(lat), rad2degr(lng)]);
+}
+
 //custom algorithm to determine the best technician to attend to a service
 const bestPossibleTechnician = async (vendingMachineCoordinates) => {
     let users = await userService.getTechnicians();
     console.log('The users are');
-    console.log(users);
+    // console.log(users);
+    
+    //get realtime/fake current coords
     const latlong = []
     for(let user of users) {
         let randomCoords = getRandomCoordinates();
@@ -41,6 +78,18 @@ const bestPossibleTechnician = async (vendingMachineCoordinates) => {
         user.address.latitude = randomCoords[0];
         user.address.longitude = randomCoords[1];
     }
+
+    //now determine the locations of all the other pending appointments and calculate the center
+    for(let user of users) {
+        let pending = await appointmentService.getAppointmentByUserId(user._id);
+        // console.log(pending);
+        user.pendingApp = pending;
+        apppointLocations = [];
+        for(let appointment of pending) {
+            console.log(appointment);
+        }
+    }
+
     let querystring = MAPS_URL;
     querystring += 'origins=';
     for(let data of latlong) {
@@ -59,10 +108,10 @@ const bestPossibleTechnician = async (vendingMachineCoordinates) => {
         users[i].distanceMatrix = distanceData;
     }
     users.sort((a, b) => (a.distanceMatrix.elements[0].distance.value > b.distanceMatrix.elements[0].distance.value ? 1 : -1))
-    console.log(users);
+    // console.log(users);
 
-    //now determine how pending orders the technician has
-    // let appointments = 
+
+
 
 
     return users[0];
