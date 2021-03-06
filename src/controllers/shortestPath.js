@@ -84,6 +84,11 @@ const bestPossibleTechnician = async (vendingMachineCoordinates) => {
         // console.log(pending);
         user.pendingApp = pending;
         let apppointLocations = [];
+        //add current location to centroid calculation
+        apppointLocations.push({
+            'latitude': user.address.latitude,
+            'longitude': user.address.longitude
+        });
         for(let appointment of pending) {
             let latlong = {
                 'latitude': appointment.vendingMachine.location.latitude,

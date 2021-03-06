@@ -4,11 +4,9 @@ const { appointmentService, vendingMachineService, complaintService } = require(
 const { bestPossibleTechnician } = require('./shortestPath');
 
 const getAppointment = catchAsync(async(req, res) => {
-
     const result = await appointmentService.getAppointment();
     console.log(result);
     res.send(result);
-
 })
 
 const getAppointmentByUserId = catchAsync(async(req, res) => {
