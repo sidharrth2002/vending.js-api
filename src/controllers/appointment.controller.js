@@ -32,7 +32,9 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
             let bestTechnician = await bestPossibleTechnician(coords, '');
         }
         
+        console.log(`iddddd` +req.body.complaintId)
         let complaint = await complaintService.getComplaintByID(req.body.complaintId)
+        console.log(`complaint` + complaint)
         if(!complaint){
             res.status(404).send('Complaint Not Found');
         } else {
