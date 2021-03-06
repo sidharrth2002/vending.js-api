@@ -1,14 +1,13 @@
 const httpStatus = require('http-status');
-const { Complaint } = require('../models');
+const { Complaint, VendingMachine } = require('../models');
 const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
-const { vendingMachineService } = require('./vendingMachine.service');
 
 const makeComplaint = async(reqbody) => {
 /*     if(mongoose.isValidObjectId(reqbody.vendingMachineID)) {
         reqbody.vendingMachineID = mongoose.Types.ObjectId(reqbody.vendingMachineID);
     } */
-    let machine = await vendingMachineService.getVendingMachineByID(reqbody.vendingMachineID);
+    let machine = await VendingMachine.findById(id);
     console.log(reqbody)
     const newComplaint = new Complaint({
         body: reqbody.body,
