@@ -25,14 +25,14 @@ const getAppointmentByUserId = async(id) => {
 
 const getPendingByUserId = async(id) => {
     if(mongoose.isValidObjectId(id)) {
-        return Appointment.find({ technician: mongoose.Types.ObjectId(id), 'status': { $in: ['Pending', 'Ongoing'] } })
+        return Appointment.find({ technician: id, 'status': { $in: ['Pending', 'Ongoing'] } })
     } else {
         return;
     }
 }
 
 //integrate later lah
-const makeAppointment = async(vendingMachineID, technicianID, serviceType, remarks) => {
+const makeAppointment = async(vendingMachineID, technicianID, serviceType, remarks, complaintId) => {
     // console.log(vendingMachineID, remarks)
     if(!mongoose.isValidObjectId(technicianID)){
         technicianID = mongoose.Types.ObjectId(technicianID)
@@ -80,7 +80,8 @@ const declineAppointment = async(appointmentID) => {
         useFindAndModify: false
     })
     console.log(decline)
-    return decline
+
+    return decline;
 }
 
 module.exports = {

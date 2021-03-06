@@ -11,6 +11,12 @@ const appointmentSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'vendingmachine'
     },
+    complaint:{
+
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Complaint'
+
+    },
     serviceType: {
         type: String,
         enum: ['Repair', 'Refuelling', 'Maintenance', 'General']
