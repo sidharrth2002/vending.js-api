@@ -12,7 +12,7 @@ router
 
 router
 .route('/:id')
-.get(auth('getComplaints'), complaintController.getComplaintByID)
+.get(complaintController.getComplaintByID)
 .patch(auth('updateComplaints'), complaintController.updateComplaintByID)
 
 router

@@ -10,8 +10,8 @@ const complaintSchema = mongoose.Schema(
       trim: true,
     },
     vendingMachine: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'VendingMachines'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'vendingmachine'
     },
     urgency: {
       type: String,
