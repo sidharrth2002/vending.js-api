@@ -1,6 +1,6 @@
 const express = require('express');
 const validate = require('../../middlewares/validate');
-const bestPossibleTechnician = require('../../controllers/shortestPath');
+const { bestPossibleTechnician } = require('../../controllers/shortestPath');
 
 const router = express.Router();
 

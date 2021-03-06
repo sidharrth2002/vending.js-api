@@ -8,7 +8,7 @@ const MAPS_URL = 'https://api.distancematrix.ai/maps/api/distancematrix/json?';
 const getRandomCoordinates = () => {
     let latitude = (3.0738 * Math.PI / 180);
     let longitude = (101.5183 * Math.PI / 180);
-    let max_distance = 300;
+    let max_distance = 10000;
     let min_distance = 100;
     let earthRadius = 6371000;
     let distance = Math.sqrt(Math.random() * (Math.pow(max_distance, 2) - Math.pow(min_distance, 2)) + Math.pow(min_distance, 2));
@@ -115,4 +115,7 @@ const bestPossibleTechnician = async (vendingMachineCoordinates) => {
     return toptechnicians[0]._id;
 }
 
-module.exports = bestPossibleTechnician
+module.exports = {
+    bestPossibleTechnician,
+    getRandomCoordinates
+}

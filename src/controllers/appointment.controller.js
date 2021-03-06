@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { appointmentService, vendingMachineService, complaintService } = require('../services');
-const bestPossibleTechnician = require('./shortestPath');
+const { bestPossibleTechnician } = require('./shortestPath');
 
 const getAppointment = catchAsync(async(req, res) => {
 

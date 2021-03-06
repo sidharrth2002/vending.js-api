@@ -7,6 +7,7 @@ const appointmentRoute = require('./appointment.route');
 const vendingMachineRoute = require('./vendingMachines.route');
 const shortestPathRoute = require('./shortestPath.route');
 const pushnotRoute = require('./pushnot.route');
+const coordinatesRoute = require('./coordinates.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -31,6 +32,10 @@ const defaultRoutes = [
   {
     path: '/vendingmachines',
     route: vendingMachineRoute
+  },
+  {
+    path: '/coordinates',
+    route: coordinatesRoute
   },
   {
     path: '/testpush',
