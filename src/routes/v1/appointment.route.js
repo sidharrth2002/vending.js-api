@@ -7,7 +7,8 @@ const router = express.Router();
 
 router
     .route('/')
-    .get(appointmentController.getAppointment);
+    .get(appointmentController.getAppointment)
+    .delete(appointmentController.deleteAppointment);
 
 router
     .route('/autoappointment')

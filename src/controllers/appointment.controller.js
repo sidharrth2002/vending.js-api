@@ -60,10 +60,19 @@ const takeOverAppointment = catchAsync(async(req, res) => {
     res.send(updated);
 })
 
+const deleteAppointment = catchAsync(async(req, res) => {
+
+    let appointmentID = req.body.appointmentID;
+    let deleted = await appointmentService.declineAppointment(appointmentID)
+    res.send(deleted)
+
+})
+
 module.exports = {
     getAppointment,
     getAppointmentByUserId,
     makeAppointmentAutomatically,
     updateAppointment,
-    takeOverAppointment
+    takeOverAppointment,
+    deleteAppointment
 }

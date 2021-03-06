@@ -60,11 +60,24 @@ const reassignAppointment = async(appointmentID, technicianID) => {
     return appointment;
 }
 
+const declineAppointment = async(appointmentID) => {
+
+    let decline = await Appointment.findOneAndRemove({
+        _id: appointmentID
+    })
+
+    console.log(decline)
+
+    return decline
+
+}
+
 module.exports = {
     getAppointment,
     getAppointmentByUserId,
     makeAppointment,
     updateAppointment,
     getPendingByUserId,
-    reassignAppointment
+    reassignAppointment,
+    declineAppointment
 }
