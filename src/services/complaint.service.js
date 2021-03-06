@@ -26,9 +26,8 @@ const getComplaints = async(reqbody) => {
 }
 
 const getComplaintByID = async(id) => {
-    Complaint.findById(id).populate("vendingMachine").exec((err, doc) => {
-        console.log(doc)
-    });
+    let complaint = Complaint.findById(id).populate("vendingMachine");
+    return complaint
 }
 
 const getComplaintByMachine = async(machineID) => {
@@ -36,12 +35,14 @@ const getComplaintByMachine = async(machineID) => {
 }
 
 const updateComplaintByID = async(id, newstatus) => {
+    console.log(id, newstatus);
     const complaint = await getComplaintByID(id);
     if(!complaint) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Complaint not found');
     }
     complaint.status = newstatus;
-    await complaint.save();
+    let result = await complaint.save();
+    return result;
 }
 
 module.exports = {

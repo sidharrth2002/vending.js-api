@@ -18,6 +18,7 @@ const getAppointmentByUserId = catchAsync(async(req, res) => {
 
 const makeAppointmentAutomatically = catchAsync(async(req, res) => {
     // console.log(req.body)
+    let bestTechnician;
     let vendingMachine = await vendingMachineService.getVendingMachineByID(req.body.vendingMachineID);
     console.log(vendingMachine)
     if(!vendingMachine) {
@@ -28,9 +29,9 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
             'longitude': vendingMachine.location.longitude
         }
         if(req.body.technicianExclude) {
-            let bestTechnician = await bestPossibleTechnician(coords, technicianExclude);            
+            bestTechnician = await bestPossibleTechnician(coords, technicianExclude);            
         } else {
-            let bestTechnician = await bestPossibleTechnician(coords, '');
+            bestTechnician = await bestPossibleTechnician(coords, '');
         }
         
         let complaint = await Complaint.findById(req.body.complaintId);
@@ -42,8 +43,21 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
             console.log(complaint.body)
             let complaintAsRemarks = complaint.body;
             let serviceType = req.body.serviceType;
-            const result = await appointmentService.makeAppointment(req.body.vendingMachineID, bestTechnician, serviceType, complaintAsRemarks);
-            res.send(result);
+            const result = await appointmentService.makeAppointment(req.body.vendingMachineID, bestTechnician, serviceType, complaintAsRemarks, complaint._id);
+            
+            if(!result){
+
+
+
+            }else{
+
+                complaint.status = "WIP"
+                await complaint.save();
+                res.send(result);
+
+            }
+
+            
         }
     }
 })
@@ -58,7 +72,9 @@ const updateAppointment = catchAsync(async(req, res) => {
 })
 
 const takeOverAppointment = catchAsync(async(req, res) => {
-    console.log(req)
+    console.log('here')
+    console.log(req.body.technicianID)
+    console.log(req.body.appointmentID)
     let newTechnicianID = req.body.technicianID;
     let appointmentID = req.body.appointmentID;
     let updated = await appointmentService.reassignAppointment(appointmentID, newTechnicianID);
@@ -67,8 +83,12 @@ const takeOverAppointment = catchAsync(async(req, res) => {
 
 const deleteAppointment = catchAsync(async(req, res) => {
 
+    /* let vendingMachineID = req.body.vendingMachineID;
+    let technicainExclude = req.body.technicianExclude;
+    let complaintId = req.body.complaintId; */
     let appointmentID = req.body.appointmentID;
     let deleted = await appointmentService.declineAppointment(appointmentID)
+
     res.send(deleted)
 
 })
