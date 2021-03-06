@@ -24,7 +24,7 @@ const getRandomCoordinates = () => {
     return [randomLat, randomLon];
 }
 
-console.log(getRandomCoordinates());
+// console.log(getRandomCoordinates());
 
 const rad2degr = (rad) => { 
     return rad * 180 / Math.PI; 
@@ -35,7 +35,7 @@ const degr2rad = (degr) => {
 }
 
 const getCenter = (latLngInDegr) => {
-    console.log(latLngInDegr);
+    // console.log(latLngInDegr);
     var LATIDX = 0;
     var LNGIDX = 1;
     var sumX = 0;
@@ -110,7 +110,7 @@ const bestPossibleTechnician = async (vendingMachineCoordinates, excludeTechnici
             querystring = querystring + vendingMachineCoordinates['latitude'] + ',' + vendingMachineCoordinates['longitude'];
             querystring += '&key=' + process.env.MAP_KEY;
             let doc = await axios.get(querystring, {method: 'GET', mode: 'no-cors'});
-            console.log(doc.data.rows[0].elements[0].distance);
+            // console.log(doc.data.rows[0].elements[0].distance);
             let relativeDist = doc.data.rows[0].elements[0].distance.value;
             user.relativeDist = relativeDist;
         } else {
@@ -121,7 +121,7 @@ const bestPossibleTechnician = async (vendingMachineCoordinates, excludeTechnici
     users.sort((a, b) => (a.relativeDist > b.relativeDist ? 1 : -1));
     let toptechnicians = users.slice(0, 4);
     toptechnicians.sort((a, b) => (a.pendingApp.length > b.pendingApp.length ? 1 : -1));
-    console.log(toptechnicians);
+    // console.log(toptechnicians);
     return toptechnicians[0]._id;
 }
 

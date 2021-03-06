@@ -16,7 +16,7 @@ const getAppointmentByUserId = catchAsync(async(req, res) => {
 })
 
 const makeAppointmentAutomatically = catchAsync(async(req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     let vendingMachine = await vendingMachineService.getVendingMachineByID(req.body.vendingMachineID);
     console.log(vendingMachine)
     if(!vendingMachine) {
@@ -35,8 +35,9 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
         let complaint = await complaintService.getComplaintByID(req.body.complaintId)
         if(!complaint){
             res.status(404).send('Complaint Not Found');
-        }else{
-            console.log( "body here" + complaint.body)
+        } else {
+            console.log("Final Complaint Body here")
+            console.log(complaint.body)
             let complaintAsRemarks = complaint.body;
             let serviceType = req.body.serviceType;
             const result = await appointmentService.makeAppointment(req.body.vendingMachineID, bestTechnician, serviceType, complaintAsRemarks);
