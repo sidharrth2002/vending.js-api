@@ -4,15 +4,19 @@ const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
 
 const makeComplaint = async(reqbody) => {
-    if(!mongoose.isValidObjectId(reqbody.vendingMachineID)) {
+/*     if(mongoose.isValidObjectId(reqbody.vendingMachineID)) {
         reqbody.vendingMachineID = mongoose.Types.ObjectId(reqbody.vendingMachineID);
-    }
+    } */
+
+    console.log(reqbody)
+
     const newComplaint = new Complaint({
         body: reqbody.body,
         urgency: reqbody.urgency,
         serviceType: reqbody.serviceType,
         vendingMachine: mongoose.Types.ObjectId(reqbody.vendingMachineID),
     })
+    console.log(`new complaint: ` + newComplaint)
     if(newComplaint.serviceType == 'Refuelling') {
         newComplaint.itemsToRefill = reqbody.itemsToRefill;
     }
@@ -25,7 +29,11 @@ const getComplaints = async(reqbody) => {
 }
 
 const getComplaintByID = async(id) => {
-    return Complaint.findById(id);
+    Complaint.findById(id).populate("vendingMachine").exec((err, doc) => {
+
+        console.log(doc)
+
+    });
 }
 
 const getComplaintByMachine = async(machineID) => {

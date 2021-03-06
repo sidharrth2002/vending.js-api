@@ -33,6 +33,7 @@ const getPendingByUserId = async(id) => {
 
 //integrate later lah
 const makeAppointment = async(vendingMachineID, technicianID, serviceType, remarks) => {
+    console.log(vendingMachineID, remarks)
     if(!mongoose.isValidObjectId(technicianID)){
         technicianID = mongoose.Types.ObjectId(technicianID)
     }

@@ -7,6 +7,7 @@ const makeComplaint = catchAsync(async (req, res) => {
     if(!req.body.vendingMachine || !req.body.body || !req.body.urgency) {
         res.status(503).send('Missing Information');
     }
+    console.log(req.body)
     let createdComplaint = await complaintService.makeComplaint(req.body);
     if(createdComplaint) {
         res.status(200).send(createdComplaint)
