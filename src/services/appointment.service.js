@@ -48,28 +48,36 @@ const makeAppointment = async(vendingMachineID, technicianID, serviceType, remar
 }
 
 const updateAppointment = async(id, status) => {
-    let updated = await Appointment.findOneAndUpdate({_id: id}, {status: status}, {
-        new: true
-    }).populate('technician').populate('vendingMachine')
+    console.log(id);
+    console.log(status);
+    let updated = await Appointment.findByIdAndUpdate(id, {status: status}, {
+        new: true,
+        useFindAndModify: false
+    })
+    console.log(updated);
     return updated;
 }
 
 const reassignAppointment = async(appointmentID, technicianID) => {
-    let appointment = await Appointment.findOneAndUpdate({_id:appointmentID}, {technician: mongoose.Types.ObjectId(technicianID)}, {new: true});
+    console.log(appointmentID);
+    console.log(technicianID);
+    let appointment = await Appointment.findOneAndUpdate({ _id : appointmentID}, 
+        {technician: mongoose.Types.ObjectId(technicianID)
+    }, {
+        new: true
+    });
     console.log(appointment);
     return appointment;
 }
 
 const declineAppointment = async(appointmentID) => {
-
     let decline = await Appointment.findOneAndRemove({
         _id: appointmentID
+    }, {
+        useFindAndModify: false
     })
-
     console.log(decline)
-
     return decline
-
 }
 
 module.exports = {

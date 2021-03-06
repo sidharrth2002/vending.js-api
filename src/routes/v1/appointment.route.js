@@ -8,7 +8,7 @@ const router = express.Router();
 router
     .route('/')
     .get(appointmentController.getAppointment)
-    .delete(appointmentController.deleteAppointment);
+    .post(appointmentController.deleteAppointment);
 
 router
     .route('/autoappointment')
@@ -17,7 +17,7 @@ router
 router
     .route('/:id')
     .get(auth('getUsers'), appointmentController.getAppointmentByUserId)
-    .patch(auth('getUsers'), appointmentController.updateAppointment)
+    .post(auth('getUsers'), appointmentController.updateAppointment)
 
 router
     .route('/takeover')

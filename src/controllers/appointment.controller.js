@@ -44,7 +44,7 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
 })
 
 const updateAppointment = catchAsync(async(req, res) => {
-    let updated = await appointmentService.updateAppointment(req.params.id, req.body.status);
+    let updated = await appointmentService.updateAppointment(req.params.id, req.body.newStatus);
     if(updated) {
         res.status(200).send(updated);
     } else {
