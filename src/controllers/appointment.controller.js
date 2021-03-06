@@ -81,20 +81,13 @@ const takeOverAppointment = catchAsync(async(req, res) => {
 
 const deleteAppointment = catchAsync(async(req, res) => {
 
-
+    /* let vendingMachineID = req.body.vendingMachineID;
+    let technicainExclude = req.body.technicianExclude;
+    let complaintId = req.body.complaintId; */
     let appointmentID = req.body.appointmentID;
     let deleted = await appointmentService.declineAppointment(appointmentID)
 
-    if(deleted){
-
-
-        res.send(deleted)
-
-    }else{
-
-        
-
-    }
+    res.send(deleted)
 
 })
 

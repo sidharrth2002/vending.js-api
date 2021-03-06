@@ -32,6 +32,7 @@ const getComplaintByMachine = catchAsync(async(req, res) => {
 })
 
 const updateComplaintByID = catchAsync(async(req, res) => {
+    console.log(`checking req` + req.body.newStatus)
     const complaint = await complaintService.updateComplaintByID(req.body.id, req.body.newStatus);
     res.send(complaint);
 })

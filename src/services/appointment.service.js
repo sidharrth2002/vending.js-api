@@ -42,6 +42,7 @@ const makeAppointment = async(vendingMachineID, technicianID, serviceType, remar
     let newAppointment = new Appointment({
         technician: technician._id,
         vendingMachine: vendingMachine._id,
+        complaint: complaintId,
         serviceType: serviceType,
         remarks: remarks,
         deadline: moment().add(2,'d').toDate()

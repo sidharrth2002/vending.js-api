@@ -13,7 +13,7 @@ router
 router
 .route('/:id')
 .get(complaintController.getComplaintByID)
-.patch(auth('updateComplaints'), complaintController.updateComplaintByID)
+.post(complaintController.updateComplaintByID)
 
 router
 .route('/machine/:id')
