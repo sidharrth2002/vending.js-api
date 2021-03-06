@@ -1,4 +1,5 @@
 const userService = require('../services/user.service');
+// const appointment
 const axios = require('axios');
 
 const MAPS_URL = 'https://api.distancematrix.ai/maps/api/distancematrix/json?';
@@ -24,14 +25,21 @@ const getRandomCoordinates = () => {
 
 console.log(getRandomCoordinates());
 
-const getShortestPath = async (vendingMachineCoordinates) => {
+//custom algorithm to determine the best technician to attend to a service
+const bestPossibleTechnician = async (vendingMachineCoordinates) => {
     let users = await userService.getTechnicians();
+    console.log('The users are');
+    console.log(users);
     const latlong = []
     for(let user of users) {
+        let randomCoords = getRandomCoordinates();
         latlong.push({
-            'latitude': user.address.latitude,
-            'longitude': user.address.longitude
+            'latitude': randomCoords[0],
+            'longitude': randomCoords[1]
         });
+        user.address = {};
+        user.address.latitude = randomCoords[0];
+        user.address.longitude = randomCoords[1];
     }
     let querystring = MAPS_URL;
     querystring += 'origins=';
@@ -44,18 +52,20 @@ const getShortestPath = async (vendingMachineCoordinates) => {
     querystring += '&destinations=';
     querystring = querystring + vendingMachineCoordinates['latitude'] + ',' + vendingMachineCoordinates['longitude'];
     querystring += '&key=' + process.env.MAP_KEY;
-
     let doc = await axios.get(querystring, {method: 'GET', mode: 'no-cors'});
     let data = doc.data.rows;
-
     for(let i=0; i<users.length; i++) {
         let distanceData = data[i];
         users[i].distanceMatrix = distanceData;
     }
-
     users.sort((a, b) => (a.distanceMatrix.elements[0].distance.value > b.distanceMatrix.elements[0].distance.value ? 1 : -1))
+    console.log(users);
+
+    //now determine how pending orders the technician has
+    // let appointments = 
+
 
     return users[0];
 }
 
-module.exports = getShortestPath
+module.exports = bestPossibleTechnician

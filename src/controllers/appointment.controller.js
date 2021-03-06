@@ -12,12 +12,9 @@ const getAppointment = catchAsync(async(req, res) => {
 })
 
 const getAppointmentByUserId = catchAsync(async(req, res) => {
-
     //console.log(req.params.id)
     const result = await appointmentService.getAppointmentByUserId(req.params.id);
-
     res.send(result);
-
 })
 
 const makeAppointmentAutomatically = catchAsync(async(req, res) => {
@@ -45,8 +42,18 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
     }
 })
 
+const updateAppointment = catchAsync(async(req, res) => {
+    let updated = await appointmentService.updateAppointment(req.params.id, req.body.status);
+    if(updated) {
+        res.status(200).send(updated);
+    } else {
+        res.status(500).send('Internal Server Error');
+    }
+})
+
 module.exports = {
     getAppointment,
     getAppointmentByUserId,
-    makeAppointmentAutomatically
+    makeAppointmentAutomatically,
+    updateAppointment
 }

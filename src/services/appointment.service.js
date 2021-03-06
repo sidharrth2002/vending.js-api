@@ -40,8 +40,16 @@ const makeAppointment = async(vendingMachineID, technicianID, serviceType, remar
     return newAppointment;
 }
 
+const updateAppointment = async(id, status) => {
+    let updated = await Appointment.findOneAndUpdate({_id: id}, {status: status}, {
+        new: true
+    })
+    return updated;
+}
+
 module.exports = {
     getAppointment,
     getAppointmentByUserId,
-    makeAppointment
+    makeAppointment,
+    updateAppointment
 }

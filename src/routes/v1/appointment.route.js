@@ -15,6 +15,7 @@ router
 
 router
     .route('/:id')
-    .get(auth('getUsers'), appointmentController.getAppointmentByUserId);
+    .get(auth('getUsers'), appointmentController.getAppointmentByUserId)
+    .patch(auth('getUsers'), appointmentController.updateAppointment)
 
 module.exports = router;
