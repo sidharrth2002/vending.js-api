@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const httpStatus = require('http-status');
 const { Appointment } = require('../models');
 const ApiError = require('../utils/ApiError');
+const moment = require('moment');
 
 const getAppointment = async() => {
     const appointments = await Appointment.find()
@@ -32,23 +33,18 @@ const getPendingByUserId = async(id) => {
 
 //integrate later lah
 const makeAppointment = async(vendingMachineID, technicianID, serviceType, remarks) => {
-
     if(!mongoose.isValidObjectId(technicianID)){
-
         technicianID = mongoose.Types.ObjectId(technicianID)
-
     }
-
     let newAppointment = new Appointment({
-    
         technician: technicianID,
         vendingMachine: mongoose.Types.ObjectId(vendingMachineID),
         serviceType: serviceType,
         remarks: remarks,
-        deadline: new Date(Date.now() - 86400 * 1000)
+        deadline: moment().add(2,'d').toDate()
     })
     await newAppointment.save();
-    return newAppointment;
+    return Appointment.findById(newAppointment._id).populate('vendingMachine').populate('technician');
 }
 
 const updateAppointment = async(id, status) => {

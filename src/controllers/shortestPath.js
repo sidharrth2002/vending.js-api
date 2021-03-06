@@ -112,7 +112,7 @@ const bestPossibleTechnician = async (vendingMachineCoordinates) => {
     let toptechnicians = users.slice(0, 4);
     toptechnicians.sort((a, b) => (a.pendingApp.length > b.pendingApp.length ? 1 : -1));
     console.log(toptechnicians);
-    return toptechnicians[0];
+    return toptechnicians[0]._id;
 }
 
 module.exports = bestPossibleTechnician
