@@ -65,13 +65,14 @@ const updateAppointment = async(id, status) => {
 const reassignAppointment = async(appointmentID, technicianID) => {
     console.log(appointmentID);
     console.log(technicianID);
-    let appointment = await Appointment.findByIdAndUpdate(appointmentID, 
+/*     let appointment = await Appointment.findByIdAndUpdate(appointmentID, 
         {technician: technicianID
     }, {
-        new: true
+        new: true,
+        useFindAndModify: false
     });
     console.log(appointment);
-    return appointment;
+    return appointment; */
 }
 
 const declineAppointment = async(appointmentID) => {
