@@ -13,14 +13,15 @@ router
 router
     .route('/autoappointment')
     .post(auth('getUsers'), appointmentController.makeAppointmentAutomatically);
+    
+router
+    .route('/takeover')
+    .post(appointmentController.takeOverAppointment)
 
 router
     .route('/:id')
     .get(auth('getUsers'), appointmentController.getAppointmentByUserId)
     .post(auth('getUsers'), appointmentController.updateAppointment)
 
-router
-    .route('/takeover')
-    .post(appointmentController.takeOverAppointment)
 
 module.exports = router;
