@@ -33,7 +33,6 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
         } else {
             bestTechnician = await bestPossibleTechnician(coords, '');
         }
-        
         let complaint = await Complaint.findById(req.body.complaintId);
         console.log(complaint);
         if(!complaint){
@@ -43,21 +42,13 @@ const makeAppointmentAutomatically = catchAsync(async(req, res) => {
             console.log(complaint.body)
             let complaintAsRemarks = complaint.body;
             let serviceType = req.body.serviceType;
-            const result = await appointmentService.makeAppointment(req.body.vendingMachineID, bestTechnician, serviceType, complaintAsRemarks, complaint._id);
-            
+            const result = await appointmentService.makeAppointment(req.body.vendingMachineID, bestTechnician, serviceType, complaintAsRemarks, complaint._id);          
             if(!result){
-
-
-
             }else{
-
                 complaint.status = "WIP"
                 await complaint.save();
                 res.send(result);
-
-            }
-
-            
+            } 
         }
     }
 })

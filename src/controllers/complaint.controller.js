@@ -27,7 +27,8 @@ const getComplaintByID = catchAsync(async(req, res) => {
 })
 
 const getComplaintByMachine = catchAsync(async(req, res) => {
-    const result = await complaintService.getComplaintByMachine(req.params.machineID);
+    console.log('jdsfskdfds');
+    const result = await complaintService.getComplaintByMachine(req.params.id);
     res.send(result);
 })
 

@@ -31,6 +31,7 @@ const getComplaintByID = async(id) => {
 }
 
 const getComplaintByMachine = async(machineID) => {
+    console.log(machineID);
     return Complaint.findOne( { vendingMachine: machineID } );
 }
 
