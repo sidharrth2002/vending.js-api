@@ -24,4 +24,5 @@ router
     .post(auth('getUsers'), appointmentController.updateAppointment)
 
 
+
 module.exports = router;

@@ -63,9 +63,6 @@ const updateAppointment = catchAsync(async(req, res) => {
 })
 
 const takeOverAppointment = catchAsync(async(req, res) => {
-    console.log('here')
-    console.log(req.body.technicianID)
-    console.log(req.body.appointmentID)
     let newTechnicianID = req.body.technicianID;
     let appointmentID = req.body.appointmentID;
     let updated = await appointmentService.reassignAppointment(appointmentID, newTechnicianID);
