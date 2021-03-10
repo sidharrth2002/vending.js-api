@@ -85,7 +85,7 @@ const bestPossibleTechnician = async (vendingMachineCoordinates, excludeTechnici
 
     //now determine the locations of all the other pending appointments and calculate the center
     for(let user of users) {
-        let pending = await appointmentService.getAppointmentByUserId(user._id);
+        let pending = await appointmentService.getPendingByUserId(user._id);
         // console.log(pending);
         user.pendingApp = pending;
         let apppointLocations = [];
@@ -95,6 +95,7 @@ const bestPossibleTechnician = async (vendingMachineCoordinates, excludeTechnici
             'longitude': user.address.longitude
         });
         for(let appointment of pending) {
+            console.log(appointment);
             let latlong = {
                 'latitude': appointment.vendingMachine.location.latitude,
                 'longitude': appointment.vendingMachine.location.longitude

@@ -26,6 +26,8 @@ const getAppointmentByUserId = async(id) => {
 const getPendingByUserId = async(id) => {
     if(mongoose.isValidObjectId(id)) {
         return Appointment.find({ technician: id, 'status': { $in: ['Pending', 'Ongoing'] } })
+        .populate('technician')
+        .populate('vendingMachine');
     } else {
         return;
     }
