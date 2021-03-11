@@ -4,6 +4,8 @@ const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
 
 const makeComplaint = async(reqbody) => {
+    //will give url of image in reqbody.photo 
+
     console.log(reqbody)
     let machine = await VendingMachine.findById(reqbody.vendingMachine);
 
@@ -12,6 +14,7 @@ const makeComplaint = async(reqbody) => {
         urgency: reqbody.urgency,
         serviceType: reqbody.serviceType,
         vendingMachine: machine._id,
+        // photo: reqbody.photo,
     })
     console.log(`new complaint: ` + newComplaint)
     if(newComplaint.serviceType == 'Refuelling') {
