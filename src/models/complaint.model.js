@@ -28,7 +28,11 @@ const complaintSchema = mongoose.Schema(
       enum: ['Repair', 'Refuelling', 'Maintenance', 'General']
     },
     photo: String,
-    photoTags: [String],
+    photoTags: [{
+      _id: false,
+      confidence: Number,
+      tag: String
+    }],
     itemsToRefill: [String],
     remarks: String
   }, {
