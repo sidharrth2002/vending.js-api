@@ -21,6 +21,11 @@ const getComplaints = catchAsync(async(req, res) => {
     res.send(result);
 })
 
+const patchPhoto = catchAsync(async(req, res) => {
+    const result = await complaintService.addPhoto(req.params.id, req.body.photo);
+    res.send(result);
+})
+
 const getComplaintByID = catchAsync(async(req, res) => {
     const result = await complaintService.getComplaintByID(req.params.id);
     res.send(result);
@@ -43,5 +48,6 @@ module.exports = {
     getComplaints,
     getComplaintByID,
     getComplaintByMachine,
-    updateComplaintByID
+    updateComplaintByID,
+    patchPhoto
 };  

@@ -14,6 +14,7 @@ router
 .route('/:id')
 .get(complaintController.getComplaintByID)
 .post(complaintController.updateComplaintByID)
+.patch(complaintController.patchPhoto)
 
 router
 .route('/machine/:id')
