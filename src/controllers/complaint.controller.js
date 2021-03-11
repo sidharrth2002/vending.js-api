@@ -22,6 +22,8 @@ const getComplaints = catchAsync(async(req, res) => {
 })
 
 const patchPhoto = catchAsync(async(req, res) => {
+    console.log(req.params)
+    console.log(req.body);
     const result = await complaintService.addPhoto(req.params.id, req.body.photo);
     res.send(result);
 })
