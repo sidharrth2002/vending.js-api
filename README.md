@@ -14,4 +14,4 @@ The standout feature is the server-side algorithm that calculates the best techn
 - [x] Interface for Technicians
 - [x] Ability to decline and takeover existing appointments, retriggering the technician dispatch algorithm
 
-Read the full documentation [here](https://mathsforgeeks.org/vending-js-docs/), including the explanation of the algorithm: 
+Read the full documentation [here](https://mathsforgeeks.org/vending-js-docs/), including the explanation of the algorithm.
